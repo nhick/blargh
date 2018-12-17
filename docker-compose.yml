@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  worker:
+    build:
+      context: ./worker
+      dockerfile: worker.Dockerfile
+    volumes:
+    - "./worker:/app"
+    - "./data:/app/data"
+    environment:
+    - TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
+  api:
+    build:
+      context: ./api
+      dockerfile: api.Dockerfile
+    volumes:
+    - "./api:/app"
+    - "./data:/app/data"
+    ports:
+    - "3000:3000"
+  redis:
+    image: redis
